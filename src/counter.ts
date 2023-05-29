@@ -13,6 +13,9 @@ export async function setupCounter(element: HTMLButtonElement) {
   };
   const intitialValue = 1;
   const wrappedPort1 = wrapPortWithSource(port1, "main");
+  wrappedPort1.addEventListener("message", (event) => {
+    console.log(`message received in MAIN`, event.data);
+  });
   const createCounter = comlink.wrap<CounterAPIFactory>(wrappedPort1);
   const counter = await createCounter(intitialValue);
   setCounter(await counter.value);
