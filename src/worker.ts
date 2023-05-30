@@ -1,6 +1,5 @@
 import * as comlink from "comlink";
 import { CounterAPIFactory } from "./types";
-import { wrapPortWithSource } from "./utils";
 
 self.addEventListener("message", (event) => {
   const factory: CounterAPIFactory = (initial) => {
@@ -14,6 +13,5 @@ self.addEventListener("message", (event) => {
     };
   };
 
-  const wrappedPort = wrapPortWithSource(event.data.port, "worker");
-  comlink.expose(factory, wrappedPort);
+  comlink.expose(factory, event.data.port);
 });
