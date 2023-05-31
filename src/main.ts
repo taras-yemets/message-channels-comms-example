@@ -1,7 +1,6 @@
 import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
-import { setupCounter } from "./counter.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -12,13 +11,20 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
     <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
+    <p>
+      Open browser console and check logs from <code>src/main.ts</code>.
     </p>
   </div>
 `;
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+function main() {
+  const { port1, port2 } = new MessageChannel();
+  port1.start();
+  port1.addEventListener("message", (event) => {
+    console.log("Incoming message on port1", event.data);
+  });
+  const { port1: anotherPort1, port2: anotherPort2 } = new MessageChannel();
+  port2.postMessage({ value: anotherPort1 }, [anotherPort1]);
+}
+
+main();
