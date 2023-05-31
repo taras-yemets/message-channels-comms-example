@@ -1,4 +1,4 @@
-This is the minimal example of setting up communication between two MessageChannels.
+This is the minimal example of one one `MessagePort` posting a message with another `MessagePort`.
 
 To run the example:
 
